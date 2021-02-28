@@ -4,6 +4,7 @@ import numpy as np
 import rospy
 from geometry_msgs.msg import PoseStamped
 from styx_msgs.msg import Lane, Waypoint
+from std_msgs.msg import Int32
 from scipy.spatial import KDTree
 
 import math
@@ -23,7 +24,8 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 200 # Number of waypoints we will publish. You can change this number
+LOOKAHEAD_WPS = 50 # Number of waypoints we will publish. You can change this number
+MAX_DECEL = .5 #
 
 
 class WaypointUpdater(object):
@@ -63,11 +65,11 @@ class WaypointUpdater(object):
         
         closest_idx = self.waypoint_tree.query([x,y], 1)[1]
         
-        #Check if closest is ahead or behind vehicle
+        # Check if closest is ahead or behind vehicle
         closest_coord = self.waypoints_2d[closest_idx]
         prev_coord = self.waypoints_2d[closest_idx-1]
         
-        #Equation for hyperplane through closest_coords
+        # Equation for hyperplane through closest_coords
         cl_vect = np.array(closest_coord)
         prev_vect = np.array(prev_coord)
         pos_vect = np.array([x, y])

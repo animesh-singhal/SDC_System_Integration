@@ -100,8 +100,8 @@ class DBWNode(object):
                 # Can set throttle=1 and brake=steering=0 if you just want the car to move forward
 
             if self.dbw_enabled:
-                rospy.logwarn("DBW is enabled rn\n")
-                #rospy.logwarn("Publishing throttle=1")
+                # rospy.logwarn("DBW is enabled rn\n")
+                # rospy.logwarn("Publishing throttle=1")
 
                 self.publish(self.throttle, self.brake, self.steering)
                                
